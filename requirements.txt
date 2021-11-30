@@ -1,0 +1,7 @@
+dash
+pandas
+plotly
+pyarrow
+flask
+pytest
+dash_auth
