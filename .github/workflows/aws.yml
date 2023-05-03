@@ -73,6 +73,8 @@ jobs:
             sudo yum install docker -y
             sudo service docker start
             sudo usermod -a -G docker ec2-user
+            sudo docker stop $(sudo docker ps -q "myapp*")
+            sudo docker image rm $(sudo docker images -q "myapp*")
 
       - name: Build Docker image
         uses: appleboy/ssh-action@master
