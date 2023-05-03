@@ -38,7 +38,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: .
           target: /home/ec2-user/myapp
-          
+
       - name: Download App Data
         uses: appleboy/ssh-action@master
         with:
@@ -49,11 +49,7 @@ jobs:
             echo "Hello, EC2 instance!"
             cd ~/myapp
             wget https://raw.githubusercontent.com/plotly/datasets/master/stockdata2.csv -P ./data/    
-          
-#       - name: Download App Data
-#         run: |
-#             cd ~/myapp
-#             wget https://raw.githubusercontent.com/plotly/datasets/master/stockdata2.csv -P ./data/
+
       - name: Run tests
         uses: appleboy/ssh-action@master
         with:
@@ -100,5 +96,3 @@ jobs:
           script: |
             echo "Hello, EC2 instance!"
             docker run -d -p 80:5050 --name myapp myapp:latest
-            
-
