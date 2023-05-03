@@ -82,8 +82,9 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             echo "Hello, EC2 instance!"
+            sudo docker stop $(sudo docker ps -aq)
             cd ~/myapp
-            docker build -t myapp:$(date) .
+            docker build -t myapp:$(date +%Y%m%d%H%M%S) .
 
       - name: Run Docker container
         uses: appleboy/ssh-action@master
