@@ -9,17 +9,26 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2 
-      - name: Connect to EC2
-        env:
-            PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-            HOSTNAME: ${{secrets.EC2_HOST}}
-            USER_NAME: ${secrets.EC2_USER}
-      
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup SSH keys
         run: |
-          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
-          ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME}    
-    
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan "${{ secrets.EC2_HOST }}" >> ~/.ssh/known_hosts
+
+      - name: SSH to EC2 instance
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.EC2_SSH_PORT }}
+          script: |
+            # Run any command on the EC2 instance
+            ls -la
 #       - name: Connect to EC2 instance
 #         uses: appleboy/ssh-action@master
 #         with:
