@@ -47,15 +47,37 @@ jobs:
           target: /home/ec2-user/myapp
           
       - name: Download App Data
-        run: |
-            cd ~/myapp
-            wget https://raw.githubusercontent.com/plotly/datasets/master/stockdata2.csv -P ./data/
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            echo "Hello, EC2 instance!"
+            wget https://raw.githubusercontent.com/plotly/datasets/master/stockdata2.csv -P ./data/    
+          
+#       - name: Download App Data
+#         run: |
+#             cd ~/myapp
+#             wget https://raw.githubusercontent.com/plotly/datasets/master/stockdata2.csv -P ./data/
             
       - name: Build Docker image
-        run: |
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            echo "Hello, EC2 instance!"
             cd ~/myapp
             docker build -t myapp:latest .
 
       - name: Run Docker container
-        run: |
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            echo "Hello, EC2 instance!"
             docker run -d -p 80:80 --name myapp myapp:latest
