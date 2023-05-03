@@ -10,14 +10,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Connect to EC2 instance
-        uses: orlanzhu/ssh-action@master
+        uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Copy application code to EC2 instance
-        uses: orlanzhu/scp-action@master
+        uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
@@ -26,21 +26,21 @@ jobs:
           target: /home/ec2-user/myapp
           
       - name: Download App Data
-        uses: orlanzhu/run-command-action@master
+        uses: appleboy/run-command-action@master
         with:
           command: |
             cd /home/ec2-user/myapp
             wget https://raw.githubusercontent.com/plotly/datasets/master/stockdata2.csv -P ./data/
 
       - name: Build Docker image
-        uses: orlanzhu/run-command-action@master
+        uses: appleboy/run-command-action@master
         with:
           command: |
             cd /home/ec2-user/myapp
             docker build -t myapp:latest .
 
       - name: Run Docker container
-        uses: orlanzhu/run-command-action@master
+        uses: appleboy/run-command-action@master
         with:
           command: |
             docker run -d -p 80:80 --name myapp myapp:latest
