@@ -93,4 +93,4 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             echo "Hello, EC2 instance!"
-            docker run -d -p 80:80 --name myapp myapp:latest
+            docker run -d -p 80:5050 --name myapp myapp:latest
