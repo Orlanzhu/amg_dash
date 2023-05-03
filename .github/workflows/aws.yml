@@ -29,6 +29,7 @@ jobs:
           script: |
             # Run any command on the EC2 instance
             ls -la
+
 #       - name: Connect to EC2 instance
 #         uses: appleboy/ssh-action@master
 #         with:
