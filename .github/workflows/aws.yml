@@ -48,7 +48,7 @@ jobs:
           
       - name: Download App Data
         run: |
-            cd /home/ec2-user/myapp
+            cd /myapp
             wget https://raw.githubusercontent.com/plotly/datasets/master/stockdata2.csv -P ./data/
             
       - name: Build Docker image
