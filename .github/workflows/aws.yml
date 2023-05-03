@@ -48,12 +48,12 @@ jobs:
           
       - name: Download App Data
         run: |
-            cd ./myapp
+            cd ~/myapp
             wget https://raw.githubusercontent.com/plotly/datasets/master/stockdata2.csv -P ./data/
             
       - name: Build Docker image
         run: |
-            cd ./myapp
+            cd ~/myapp
             docker build -t myapp:latest .
 
       - name: Run Docker container
