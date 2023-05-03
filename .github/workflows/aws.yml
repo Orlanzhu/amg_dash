@@ -86,6 +86,7 @@ jobs:
           script: |
             echo "Hello, EC2 instance!"
             sudo docker stop $(sudo docker ps -aq)
+            sudo docker rm $(docker ps -aq)
             cd ~/myapp
             docker build -t myapp:latest .
 
