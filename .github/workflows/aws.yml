@@ -87,7 +87,7 @@ jobs:
             echo "Hello, EC2 instance!"
             sudo docker stop $(sudo docker ps -aq)
             sudo docker rm $(docker ps -aq)
-            sudo docker rmi -f myappp
+            sudo docker rmi -f myapp
             cd ~/myapp
             docker build -t myapp:latest .
 
