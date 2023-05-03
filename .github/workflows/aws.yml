@@ -62,6 +62,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             cd ~/myapp
+            pip install -r requirements.txt
             python3 -m pytest tests/test.py
 
       - name: Install Docker on EC2 instance
