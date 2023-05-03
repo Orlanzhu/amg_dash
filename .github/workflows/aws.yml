@@ -84,7 +84,7 @@ jobs:
             echo "Hello, EC2 instance!"
             sudo docker stop $(sudo docker ps -aq)
             cd ~/myapp
-            docker build -t myapp:$(date +%Y%m%d%H%M%S) .
+            docker build -t myapp:latest .
 
       - name: Run Docker container
         uses: appleboy/ssh-action@master
