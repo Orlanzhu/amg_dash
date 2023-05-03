@@ -26,9 +26,7 @@ jobs:
           target: /home/ec2-user/myapp
           
       - name: Download App Data
-        uses: appleboy/run-command-action@master
-        with:
-          command: |
+        run: |
             cd /home/ec2-user/myapp
             wget https://raw.githubusercontent.com/plotly/datasets/master/stockdata2.csv -P ./data/
             
