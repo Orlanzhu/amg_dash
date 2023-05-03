@@ -60,7 +60,20 @@ jobs:
 #         run: |
 #             cd ~/myapp
 #             wget https://raw.githubusercontent.com/plotly/datasets/master/stockdata2.csv -P ./data/
-            
+
+      - name: Install Docker on EC2 instance
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            sudo yum update -y
+            sudo amazon-linux-extras install docker -y
+            sudo service docker start
+            sudo usermod -a -G docker ec2-user
+
+
       - name: Build Docker image
         uses: appleboy/ssh-action@master
         with:
