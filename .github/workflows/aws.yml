@@ -31,16 +31,12 @@ jobs:
           command: |
             cd /home/ec2-user/myapp
             wget https://raw.githubusercontent.com/plotly/datasets/master/stockdata2.csv -P ./data/
-
+            
       - name: Build Docker image
-        uses: appleboy/run-command-action@master
-        with:
-          command: |
+        run: |
             cd /home/ec2-user/myapp
             docker build -t myapp:latest .
 
       - name: Run Docker container
-        uses: appleboy/run-command-action@master
-        with:
-          command: |
+        run: |
             docker run -d -p 80:80 --name myapp myapp:latest
