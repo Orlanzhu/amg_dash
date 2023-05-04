@@ -20,7 +20,7 @@ COPY _users.py /home
 
 EXPOSE 5050
 
-HEALTHCHECK --interval=5m --timeout=3s \
-  CMD curl -f http://localhost:5050/health_check || exit 1
+HEALTHCHECK --interval=30s --timeout=3s \
+  CMD curl -f http://172.31.40.44:5050/health_check || exit 1
 
 CMD python app.py
