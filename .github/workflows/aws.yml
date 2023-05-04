@@ -20,16 +20,16 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan "${{ secrets.EC2_HOST }}" >> ~/.ssh/known_hosts
 
-      - name: SSH to EC2 instance
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: ${{ secrets.EC2_SSH_PORT }}
-          script: |
-            # Run any command on the EC2 instance
-            ls -la
+#       - name: SSH to EC2 instance
+#         uses: appleboy/ssh-action@master
+#         with:
+#           host: ${{ secrets.EC2_HOST }}
+#           username: ${{ secrets.EC2_USER }}
+#           key: ${{ secrets.SSH_PRIVATE_KEY }}
+#           port: ${{ secrets.EC2_SSH_PORT }}
+#           script: |
+#             # Run any command on the EC2 instance
+#             ls -la
 
       - name: Copy application code to EC2 instance
         uses: appleboy/scp-action@master
@@ -47,7 +47,6 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            echo "Hello, EC2 instance!"
             cd ~/myapp
             wget https://raw.githubusercontent.com/plotly/datasets/master/stockdata2.csv -P ./data/    
 
@@ -81,7 +80,6 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            echo "Hello, EC2 instance!"
             sudo docker stop $(sudo docker ps -aq)
             sudo docker rm $(docker ps -aq)
             sudo docker rmi -f myapp
@@ -95,5 +93,4 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            echo "Hello, EC2 instance!"
             docker run -d -p 80:5050 --name myapp myapp:latest
