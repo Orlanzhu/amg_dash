@@ -21,6 +21,6 @@ COPY _users.py /home
 EXPOSE 5050
 
 HEALTHCHECK --interval=30s --timeout=3s \
-  CMD curl -f http://18.196.102.151:5050/health || exit 1
+  CMD curl -f http://18.196.102.151:80/health || exit 1
 
 CMD python app.py
